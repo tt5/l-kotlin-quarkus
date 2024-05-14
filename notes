@@ -1,0 +1,3 @@
+
+kubectl -n knative-serving edit configmap config-deployment
+https://github.com/knative/serving/issues/8038

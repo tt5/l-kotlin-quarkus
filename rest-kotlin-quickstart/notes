@@ -1,0 +1,12 @@
+quarkus extension add quarkus-kubernetes
+
+quarkus build --native
+quarkus image build --native
+podman push localhost:32000/quarkus:<tag>
+quarkus deploy knative --native
+
+quarkus image build --native --skip-tests
+podman push localhost:32000/quarkus:0.0.1
+microk8s ctr image pull localhost:32000/quarkus:0.0.1
+kn service update rest-kotlin-quickstart --image localhost:32000/quarkus:0.0.1
+http http://rest-kotlin-quickstart.default.192.168.0.105.sslip.io/hello
